@@ -1,30 +1,31 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Step 1: Install openfortivpn via Homebrew
 echo "Installing openfortivpn..."
 brew install openfortivpn
 
 # Step 2: Prompt the user for VPN details
-read "SERVER_IP?Enter the VPN server IP: "
-read "SERVER_PORT?Enter the VPN server port: "
-read "USER_ID?Enter your VPN username: "
-read -s "USER_PASSWORD?Enter your VPN password: "
+read -p "Enter the VPN server IP: " SERVER_IP
+read -p "Enter the VPN server port: " SERVER_PORT
+read -p "Enter your VPN username: " USER_ID
+read -sp "Enter your VPN password: " USER_PASSWORD
 echo ""
-read "CERT_HASH?Enter the trusted certificate hash: "
+read -p "Enter the trusted certificate hash: " CERT_HASH
 
 # Step 3: Create a configuration file for openfortivpn
 CONFIG_FILE="$HOME/.openfortivpn/config"
 mkdir -p $(dirname "$CONFIG_FILE")
 
-cat <<EOL > "$CONFIG_FILE"
+echo "
 host = $SERVER_IP
 port = $SERVER_PORT
 username = $USER_ID
 password = $USER_PASSWORD
 trusted-cert = $CERT_HASH
-EOL
+" > $CONFIG_FILE
 
 echo "Configuration saved to $CONFIG_FILE"
+
 
 # Step 4: Add the openfortivpn command to the sudoers file for no-password execution
 SUDOERS_ENTRY="$USER ALL=(ALL) NOPASSWD: /opt/homebrew/bin/openfortivpn"
