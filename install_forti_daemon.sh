@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exec < /dev/tty
+
 # Step 1: Install openfortivpn via Homebrew
 echo "Installing openfortivpn..."
 brew install openfortivpn
