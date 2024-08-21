@@ -5,12 +5,12 @@ echo "Installing openfortivpn..."
 brew install openfortivpn
 
 # Step 2: Prompt the user for VPN details
-read -p "Enter the VPN server IP: " SERVER_IP
-read -p "Enter the VPN server port: " SERVER_PORT
-read -p "Enter your VPN username: " USER_ID
-read -sp "Enter your VPN password: " USER_PASSWORD
+read "SERVER_IP?Enter the VPN server IP: "
+read "SERVER_PORT?Enter the VPN server port: "
+read "USER_ID?Enter your VPN username: "
+read -s "USER_PASSWORD?Enter your VPN password: "
 echo ""
-read -p "Enter the trusted certificate hash: " CERT_HASH
+read "CERT_HASH?Enter the trusted certificate hash: "
 
 # Step 3: Create a configuration file for openfortivpn
 CONFIG_FILE="$HOME/.openfortivpn/config"
@@ -70,15 +70,10 @@ EOL
 
 echo "Launch agent created at $LAUNCH_AGENT_PLIST"
 
-# Step 6: Define aliases in the shell configuration file
-SHELL_CONFIG="$HOME/.bash_profile"  # Change to .zshrc or .bashrc depending on your shell
-if [ -f "$HOME/.zshrc" ]; then
-    SHELL_CONFIG="$HOME/.zshrc"
-elif [ -f "$HOME/.bashrc" ]; then
-    SHELL_CONFIG="$HOME/.bashrc"
-fi
+# Step 6: Define aliases in the .zshrc configuration file
+ZSHRC_FILE="$HOME/.zshrc"
 
-cat <<EOL >> "$SHELL_CONFIG"
+cat <<EOL >> "$ZSHRC_FILE"
 
 # Aliases to control openfortivpn daemon with sudo
 alias forti-on='sudo launchctl load -w $LAUNCH_AGENT_PLIST'
@@ -87,8 +82,8 @@ alias forti-status='launchctl list | grep com.openfortivpn.daemon'
 
 EOL
 
-echo "Aliases added to $SHELL_CONFIG"
+echo "Aliases added to $ZSHRC_FILE"
 
-# Step 7: Source the shell configuration file to apply aliases immediately
-echo "[INFO] Open new tab to use forti- commands."
+# Step 7: Source the .zshrc configuration file to apply aliases immediately
+source "$ZSHRC_FILE"
 echo "You can now use 'forti-on', 'forti-off', and 'forti-status' to control the VPN daemon."
