@@ -79,8 +79,8 @@ ZSHRC_FILE="$HOME/.zshrc"
 cat <<EOL >> "$ZSHRC_FILE"
 
 # Aliases to control openfortivpn daemon with sudo
-alias forti-on='sudo launchctl load -w $LAUNCH_AGENT_PLIST'
-alias forti-off='sudo launchctl unload -w $LAUNCH_AGENT_PLIST'
+alias forti-on='launchctl load -w $LAUNCH_AGENT_PLIST'
+alias forti-off='launchctl unload -w $LAUNCH_AGENT_PLIST'
 alias forti-status='launchctl list | grep com.openfortivpn.daemon'
 
 EOL
