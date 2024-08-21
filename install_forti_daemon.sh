@@ -88,4 +88,5 @@ EOL
 echo "Aliases added to $ZSHRC_FILE"
 
 # Step 7: Source the .zshrc configuration file to apply aliases immediately
+echo "🚨 Open new tab/terminal to use forti- related commands. 🚨"
 echo "You can now use 'forti-on', 'forti-off', and 'forti-status' to control the VPN daemon."
